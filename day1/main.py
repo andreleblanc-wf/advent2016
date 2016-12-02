@@ -81,7 +81,7 @@ def get_points(pos, newpos):
 def partb():
     facing = "N"
     pos = (0, 0)
-    visited = set((0,0))
+    visited = set((0, 0))
     for move in moves:
         if move.startswith("L"):
             facing = turnleft(facing)

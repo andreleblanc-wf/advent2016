@@ -28,17 +28,6 @@ def move(pos, dir, valid):
     return pos
 
 
-def is_valid_pos(p):
-    x, y = p
-    if x == 0 or x == 4:
-        return y == 2
-    elif x == 1 or x == 3:
-        return 0 < y < 4
-    elif x == 2:
-        return 0 <= y <= 4
-    return False
-
-
 def is_on_grid(pos, grid):
     return 0 <= pos[0] < len(grid) and 0 <= pos[1] < len(grid[0])
 

@@ -27,6 +27,7 @@ def move(pos, dir, valid):
         return newpos
     return pos
 
+
 def is_valid_pos(p):
     x, y = p
     if x == 0 or x == 4:
@@ -56,6 +57,7 @@ def part1():
         buttons.append(board[pos[0]][pos[1]])
     print buttons
 
+
 def part2():
     board = [
         [0, 0, 1, 0, 0],
@@ -68,9 +70,9 @@ def part2():
     buttons = []
     pos = (2, 0)
 
-    def valid(pos):
-        return (is_on_grid(pos, board) and
-                board[pos[0]][pos[1]] != 0)
+    def valid(_pos):
+        return (is_on_grid(_pos, board) and
+                board[_pos[0]][_pos[1]] != 0)
 
     for line in input.splitlines():
         for char in line:

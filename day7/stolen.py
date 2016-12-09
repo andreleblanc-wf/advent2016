@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+import re
 
 input = '''xdsqxnovprgovwzkus[fmadbfsbqwzzrzrgdg]aeqornszgvbizdm
 itgslvpxoqqakli[arktzcssgkxktejbno]wsgkbwwtbmfnddt[zblrboqsvezcgfmfvcz]iwyhyatqetsreeyhh
@@ -2002,80 +2001,16 @@ zgeiqtfvjgsjbcgluma[hwyhtrykkxccmfg]okqorlbwctwfgvntgmv[yiralgrosisdxzkse]tzqnsa
 tjwhvzwmhppijorvm[egqxqiycnbtxrii]ojmqyikithgouyu[lrllrgezaulugvlj]jdsrysawxkpglgg[mpvkikuabwucwlpqf]cmzkcdnrhwjmfgbmlq
 spwwppgjgfexuezrixp[rotgzyxzqxyrroafx]tkwxfiamzdjdqpftvq'''
 
+def abba(x):
+    return any(a == d and b == c and a != b for a, b, c, d in zip(x, x[1:], x[2:], x[3:]))
 
-def p1valid(s):
-    in_brackets = False
-    has = False
-    for i in range(len(s)):
-        if s[i] == '[':
-            in_brackets = True
-        if s[i] == ']':
-            in_brackets = False
-        if i + 3 >= len(s):
-            break
-        if s[i] != s[i+1] and s[i+2] == s[i+1] and s[i+3] == s[i]:
-            has = True
-            if in_brackets:
-                return False
+answer1 = 0
+answer2 = 0
+for line in input.splitlines():
+    parts = re.split(r'\[([^\]]+)\]', line)
+    sn = ' '.join(parts[::2])
+    hn = ' '.join(parts[1::2])
+    answer2 += any(a == c and a != b and b+a+b in hn for a, b, c in zip(sn, sn[1:], sn[2:]))
 
-    return has
-
-
-def part1():
-    score = 0
-    for line in input.splitlines():
-        if p1valid(line):
-            score += 1
-
-    print score
-
-
-def p2valid(s):
-    import re
-    for m in re.finditer(r'([a-z])[a-z]\1', s):
-        aba = m.group(0)
-    for i in range(len(s)):
-        if i+2 >= len(s):
-            break
-
-        aba = s[i:i+3]
-        if '[' in aba or ']' in aba:
-            continue
-
-        if aba[0] != aba[2]:
-            continue
-
-        if aba[1] == aba[0]:
-            continue
-
-        brackets = ''.join(re.findall(r'[\[\]]', s[:i]))
-        if brackets.endswith("["):
-            print 'aba is in hypernet'
-            continue
-
-        bab = aba[1] + aba[0] + aba[1]
-        if bab not in s:
-            print 'bab is not present', bab
-            continue
-
-        for m in re.finditer(bab, s):
-            _bab = m.group(0)
-            brackets = ''.join(re.findall(r'[\[\]]', s[:m.start()]))
-            if brackets.endswith("["):
-                return True
-
-    return False
-
-
-
-
-def part2():
-    score = 0
-    for line in input.splitlines():
-        if p2valid(line):
-
-            score += 1
-    print score
-
-
-part2()
+print('Answer #1:', answer1)
+print('Answer #2:', answer2)
